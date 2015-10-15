@@ -44,6 +44,12 @@ $.getJSON("emacs" , function(data) {
   $("#vimusers").html("Votes for Vim: " + data.vim);
 });
 });
+$(document).ready(setInterval(function(){
+$.getJSON("query" , function(data) {
+  $("#emacsusers").html("Votes for Emacs: " + data.emacs);
+  $("#vimusers").html("Votes for Vim: " + data.vim);
+});
+},1000));
 
 /*
   $("#cityfield").keyup(function() {
