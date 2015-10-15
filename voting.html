@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <h1 id="vimusers">Stuff for Vim</h1>
+  <h1 id="vimusers">Vote for your favorite text editor below</h1>
   <h1 id="emacsusers"></h1>
   <input id="vimbutton" type="button" value="I like Vim!">
   <input id="emacsbutton" type="button" value="I like Emacs!">
@@ -33,15 +33,15 @@
 $("#vimbutton").click( function(e) {
     e.preventDefault();
 $.getJSON("vim" , function(data) {
-  $("#vimusers").html(data.vim);
-
+  $("#vimusers").html("Votes for Vim: " + data.vim);
+$("#emacsusers").html("Votes for Emacs: " + data.emacs);
 });
 });
 $("#emacsbutton").click( function(e) {
     e.preventDefault();
-$.getJSON("vim" , function(data) {
-  $("#emacsusers").html(data.vim);
-
+$.getJSON("emacs" , function(data) {
+  $("#emacsusers").html("Votes for Emacs: " + data.emacs);
+  $("#vimusers").html("Votes for Vim: " + data.vim);
 });
 });
 
