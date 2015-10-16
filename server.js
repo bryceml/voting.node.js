@@ -58,14 +58,25 @@ http.createServer(function(req, res) {
     res.writeHead(200);
     var jsonresult = { vim: vimcount, emacs: emacscount, windows: windows, mac: mac, linux: linux, before: before, after: after, pageloads: pageloads};
     res.end(JSON.stringify(jsonresult));
-  } else {
-    fs.readFile(ROOT_DIR + /*urlObj.pathname*/"/voting.html", function(err, data) {
+  } else if (urlObj.pathname == "/") {
+    fs.readFile(ROOT_DIR + /*urlObj.pathname*/"/votingLocked.html", function(err, data) {
       if (err) {
         res.writeHead(404);
         res.end(JSON.stringify(err));
         return;
       }
       pageloads++;
+      res.writeHead(200);
+      res.end(data);
+    });
+  } else {
+    fs.readFile(ROOT_DIR + urlObj.pathname, function(err, data) {
+      if (err) {
+        res.writeHead(404);
+        res.end(JSON.stringify(err));
+        return;
+      }
+      if (urlObj.pathname == "/voting.html") pageloads++;
       res.writeHead(200);
       res.end(data);
     });

@@ -196,53 +196,53 @@
     e.preventDefault();
     $.getJSON("vim", function(data) {});
     update();
-//    $("#vimbutton").attr('disabled', 'disabled');
-//    $("#emacsbutton").attr('disabled', 'disabled');
+    $("#vimbutton").attr('disabled', 'disabled');
+    $("#emacsbutton").attr('disabled', 'disabled');
   });
   $("#emacsbutton").click(function(e) {
     e.preventDefault();
     $.getJSON("emacs", function(data) {});
     update();
-//    $("#vimbutton").attr('disabled', 'disabled');
-//    $("#emacsbutton").attr('disabled', 'disabled');
+    $("#vimbutton").attr('disabled', 'disabled');
+    $("#emacsbutton").attr('disabled', 'disabled');
   });
   $("#windowsbutton").click(function(e) {
     e.preventDefault();
     $.getJSON("windows", function(data) {});
     update();
-//    $("#windowsbutton").attr('disabled', 'disabled');
-//    $("#macbutton").attr('disabled', 'disabled');
-//    $("#linuxbutton").attr('disabled', 'disabled');
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
   });
   $("#macbutton").click(function(e) {
     e.preventDefault();
     $.getJSON("mac", function(data) {});
     update();
-//    $("#windowsbutton").attr('disabled', 'disabled');
-//    $("#macbutton").attr('disabled', 'disabled');
-//    $("#linuxbutton").attr('disabled', 'disabled');
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
   });
   $("#linuxbutton").click(function(e) {
     e.preventDefault();
     $.getJSON("linux", function(data) {});
     update();
-//    $("#windowsbutton").attr('disabled', 'disabled');
-//    $("#macbutton").attr('disabled', 'disabled');
-//    $("#linuxbutton").attr('disabled', 'disabled');
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
   });
   $("#beforebutton").click(function(e) {
     e.preventDefault();
     $.getJSON("before", function(data) {});
     update();
-  //  $("#beforebutton").attr('disabled', 'disabled');
-  //  $("#afterbutton").attr('disabled', 'disabled');
+    $("#beforebutton").attr('disabled', 'disabled');
+    $("#afterbutton").attr('disabled', 'disabled');
   });
   $("#afterbutton").click(function(e) {
     e.preventDefault();
     $.getJSON("after", function(data) {});
     update();
-  //  $("#beforebutton").attr('disabled', 'disabled');
-  //  $("#afterbutton").attr('disabled', 'disabled');
+    $("#beforebutton").attr('disabled', 'disabled');
+    $("#afterbutton").attr('disabled', 'disabled');
   });
   $(document).ready(function(){
     update();
