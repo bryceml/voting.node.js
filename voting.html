@@ -2,22 +2,77 @@
 
 <head>
   <style>
-* {
-  font-size: 20px;
-  color: #222;
-  font-family: arial,sans-serif;
-}
+    * {
+      text-align: center;
+      font-size: 16px;
+      color: #222;
+      font-family: arial, sans-serif;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      /* Set the fixed height of the footer here */
+      height: 60px;
+      background-color: #f5f5f5;
+    }
+    pre {
+      text-align: left;
+    }
+    .k {
+      color: #008800;
+      font-weight: bold;
+    }
   </style>
-  <title>City Finder</title>
+  <title>Vote</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
 
 <body>
-  <h1 id="vimusers">Vote for your favorite text editor below</h1>
-  <h1 id="emacsusers"></h1>
-  <input id="vimbutton" type="button" value="I like Vim!">
-  <input id="emacsbutton" type="button" value="I like Emacs!">
+  <div class="col-md-12">
+    <h1>Vote</h1>
+  </div>
+  <div class="col-md-4">
+    <h3 id="vimusers"></h3>
+    <h3 id="emacsusers"></h3>
+    <input id="vimbutton" type="button" value="I like Vim">
+    <input id="emacsbutton" type="button" value="I like Emacs">
+  </div>
+  <div class="col-md-4">
+    <h3 id="windowsusers"></h3>
+    <h3 id="macusers"></h3>
+    <h3 id="linuxusers"></h3>
+    <input id="windowsbutton" type="button" value="I like Windows">
+    <input id="macbutton" type="button" value="I like Macs">
+    <input id="linuxbutton" type="button" value="I like Linux">
+  </div>
+  <div class="col-md-4">
+    <h3 id="beforeusers"></h3>
+    <h3 id="afterusers"></h3>
+    <div class="col-md-6">
+    <pre><span class="k">while</span> (x == y) {
+    something();
+    somethingelse();
+}
+ </pre></div>
+<div class="col-md-6">
+      <pre><span class="k">while</span> (x == y)
+{
+    something();
+    somethingelse();
+}</pre></div>
+    <input id="beforebutton" type="button" value="I like the first">
+    <input id="afterbutton" type="button" value="I like the second">
+  </div>
+  <footer class="footer">
+    <div class="container">
+      <p id="reportPageLoads">
+      </p>
+    </div>
+  </footer>
   <!--<form> Enter A Utah City:
     <input type="text" id="cityfield" value="">
     <br> Suggestion:
@@ -30,86 +85,134 @@
 </form>-->
 </body>
 <script>
-$("#vimbutton").click( function(e) {
+  $("#vimbutton").click(function(e) {
     e.preventDefault();
-$.getJSON("vim" , function(data) {
-  $("#vimusers").html("Votes for Vim: " + data.vim);
-$("#emacsusers").html("Votes for Emacs: " + data.emacs);
-});
-});
-$("#emacsbutton").click( function(e) {
-    e.preventDefault();
-$.getJSON("emacs" , function(data) {
-  $("#emacsusers").html("Votes for Emacs: " + data.emacs);
-  $("#vimusers").html("Votes for Vim: " + data.vim);
-});
-});
-$(document).ready(setInterval(function(){
-$.getJSON("query" , function(data) {
-  $("#emacsusers").html("Votes for Emacs: " + data.emacs);
-  $("#vimusers").html("Votes for Vim: " + data.vim);
-});
-},1000));
-
-/*
-  $("#cityfield").keyup(function() {
-    $.getJSON("getcity?q=" + $("#cityfield").val(), function(data) {
-        var everything = "<ul>";
-        $.each(data, function(i, item) {
-          everything += "<li> " + data[i].city + "</li>";
-        });
-        everything += "</ul>";
-        $("#txtHint").html(everything);
-      })
-      .done(function() {
-        console.log('getJSON request succeeded!');
-      })
-      .fail(function(jqXHR, textStatus, errorThrown) {
-        console.log('getJSON request failed! ' + textStatus);
-        conlose.log("incoming " + jqXHR.responseText);
-      })
-      .always(function() {
-        console.log('getJSON request ended!');
-      })
-      .complete(function() {
-        console.log("complete");
-      });
+    $.getJSON("vim", function(data) {});
+    update();
+    $("#vimbutton").attr('disabled', 'disabled');
+    $("#emacsbutton").attr('disabled', 'disabled');
   });
-  $("#button").click(function(e) {
-    var value = $("#cityfield").val();
-    console.log(value);
+  $("#emacsbutton").click(function(e) {
     e.preventDefault();
-    $("#dispcity").text(value);
-    var myurl = "https://api.wunderground.com/api/79b56d882614a97f/geolookup/conditions/q/UT/";
-    myurl += value;
-    myurl += ".json";
-    console.log(myurl);
-    $.ajax({
-      url: myurl,
-      dataType: "jsonp",
-      success: function(parsed_json) {
-        var location = parsed_json['location']['city'];
-        var temp_string = parsed_json['current_observation']['temperature_string'];
-        var current_weather = parsed_json['current_observation']['weather'];
-        var pic = parsed_json['current_observation']['image']['url'];
-        var observation_location = parsed_json['current_observation']['observation_location']['full'];
-        var humidity = parsed_json['current_observation']['relative_humidity'];
-        var wind_mph = parsed_json['current_observation']['wind_mph'];
-        var wind_dir = parsed_json['current_observation']['wind_dir'];
-        everything = "<ul>";
-        everything += "<li>Location: " + location;
-        everything += "<li>Observation Location: " + observation_location;
-        everything += "<li>Temperature: " + temp_string;
-        everything += "<li>Humidity: " + humidity;
-        everything += "<li>Wind Speed: " + wind_mph + " MPH";
-        everything += "<li>Wind Direction: " + wind_dir;
-        everything += "<li>Weather: " + current_weather;
-        everything += "</ul>";
-        everything += "<img src=\"" + pic + "\">";
-        $("#weather").html(everything);
-      }
+    $.getJSON("emacs", function(data) {});
+    update();
+    $("#vimbutton").attr('disabled', 'disabled');
+    $("#emacsbutton").attr('disabled', 'disabled');
+  });
+  $("#windowsbutton").click(function(e) {
+    e.preventDefault();
+    $.getJSON("windows", function(data) {});
+    update();
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
+  });
+  $("#macbutton").click(function(e) {
+    e.preventDefault();
+    $.getJSON("mac", function(data) {});
+    update();
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
+  });
+  $("#linuxbutton").click(function(e) {
+    e.preventDefault();
+    $.getJSON("linux", function(data) {});
+    update();
+    $("#windowsbutton").attr('disabled', 'disabled');
+    $("#macbutton").attr('disabled', 'disabled');
+    $("#linuxbutton").attr('disabled', 'disabled');
+  });
+  $("#beforebutton").click(function(e) {
+    e.preventDefault();
+    $.getJSON("before", function(data) {});
+    update();
+    $("#beforebutton").attr('disabled', 'disabled');
+    $("#afterbutton").attr('disabled', 'disabled');
+  });
+  $("#afterbutton").click(function(e) {
+    e.preventDefault();
+    $.getJSON("after", function(data) {});
+    update();
+    $("#beforebutton").attr('disabled', 'disabled');
+    $("#afterbutton").attr('disabled', 'disabled');
+  });
+  $(document).ready(setInterval(function() {
+    update();
+  }, 1500));
+
+  function update() {
+    $.getJSON("query", function(data) {
+      $("#emacsusers").html("Votes for Emacs: " + data.emacs);
+      $("#vimusers").html("Votes for Vim: " + data.vim);
+      $("#windowsusers").html("Votes for Windows: " + data.windows);
+      $("#macusers").html("Votes for Mac: " + data.mac);
+      $("#linuxusers").html("Votes for Linux: " + data.linux);
+      $("#beforeusers").html("Votes for the first: " + data.before);
+      $("#afterusers").html("Votes for the second: " + data.after);
+      $("#reportPageLoads").html("Total Page Loads: " + data.pageloads)
     });
-  });*/
+  }
+  /*
+    $("#cityfield").keyup(function() {
+      $.getJSON("getcity?q=" + $("#cityfield").val(), function(data) {
+          var everything = "<ul>";
+          $.each(data, function(i, item) {
+            everything += "<li> " + data[i].city + "</li>";
+          });
+          everything += "</ul>";
+          $("#txtHint").html(everything);
+        })
+        .done(function() {
+          console.log('getJSON request succeeded!');
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+          console.log('getJSON request failed! ' + textStatus);
+          conlose.log("incoming " + jqXHR.responseText);
+        })
+        .always(function() {
+          console.log('getJSON request ended!');
+        })
+        .complete(function() {
+          console.log("complete");
+        });
+    });
+    $("#button").click(function(e) {
+      var value = $("#cityfield").val();
+      console.log(value);
+      e.preventDefault();
+      $("#dispcity").text(value);
+      var myurl = "https://api.wunderground.com/api/79b56d882614a97f/geolookup/conditions/q/UT/";
+      myurl += value;
+      myurl += ".json";
+      console.log(myurl);
+      $.ajax({
+        url: myurl,
+        dataType: "jsonp",
+        success: function(parsed_json) {
+          var location = parsed_json['location']['city'];
+          var temp_string = parsed_json['current_observation']['temperature_string'];
+          var current_weather = parsed_json['current_observation']['weather'];
+          var pic = parsed_json['current_observation']['image']['url'];
+          var observation_location = parsed_json['current_observation']['observation_location']['full'];
+          var humidity = parsed_json['current_observation']['relative_humidity'];
+          var wind_mph = parsed_json['current_observation']['wind_mph'];
+          var wind_dir = parsed_json['current_observation']['wind_dir'];
+          everything = "<ul>";
+          everything += "<li>Location: " + location;
+          everything += "<li>Observation Location: " + observation_location;
+          everything += "<li>Temperature: " + temp_string;
+          everything += "<li>Humidity: " + humidity;
+          everything += "<li>Wind Speed: " + wind_mph + " MPH";
+          everything += "<li>Wind Direction: " + wind_dir;
+          everything += "<li>Weather: " + current_weather;
+          everything += "</ul>";
+          everything += "<img src=\"" + pic + "\">";
+          $("#weather").html(everything);
+        }
+      });
+    });*/
 </script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 </html>
