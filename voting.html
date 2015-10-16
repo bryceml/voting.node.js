@@ -17,12 +17,33 @@
       height: 60px;
       background-color: #f5f5f5;
     }
+
     pre {
       text-align: left;
     }
+
     .k {
       color: #008800;
       font-weight: bold;
+    }
+
+    h3 {
+      display: inline-block;
+      font-size: 15px !important;
+    }
+
+    .outer {
+      position: relative;
+      border-width: 1px;
+      border-style: solid;
+      border-color: black;
+    }
+
+    .inner {
+      position: absolute;
+      bottom: 1;
+      left: 0;
+      right: 0;
     }
   </style>
   <title>Vote</title>
@@ -32,38 +53,97 @@
 </head>
 
 <body>
-  <div class="col-md-12">
+  <div class="col-xs-12">
     <h1>Vote</h1>
   </div>
-  <div class="col-md-4">
+  <div class="col-xs-4">
+    <div style="height:100px" class="outer">
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-3" style="height:100px">
+        <div class="inner" id="vimgraph" style="background-color:green;">
+        </div>
+      </div>
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-3" style="height:100px">
+        <div class="inner" id="emacsgraph" style="background-color:blue;">
+        </div>
+      </div>
+      <div class="col-xs-2">
+      </div>
+    </div>
     <h3 id="vimusers"></h3>
     <h3 id="emacsusers"></h3>
+    <br>
     <input id="vimbutton" type="button" value="I like Vim">
     <input id="emacsbutton" type="button" value="I like Emacs">
   </div>
-  <div class="col-md-4">
+  <div class="col-xs-4">
+    <div class="outer" style="height:100px">
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-2" style="height:100px">
+        <div class="inner" id="windowsgraph" style="background-color: #2672EC;">
+        </div>
+      </div>
+      <div class="col-xs-1">
+      </div>
+      <div class="col-xs-2" style="height:100px">
+        <div class="inner" id="macgraph" style="background-color:#C0C0C0;">
+        </div>
+      </div>
+      <div class="col-xs-1">
+      </div>
+      <div class="col-xs-2" style="height:100px">
+        <div class="inner" id="linuxgraph" style="background-color: #dd5814;">
+        </div>
+      </div>
+      <div class="col-xs-2">
+      </div>
+    </div>
     <h3 id="windowsusers"></h3>
     <h3 id="macusers"></h3>
     <h3 id="linuxusers"></h3>
+    <br>
     <input id="windowsbutton" type="button" value="I like Windows">
-    <input id="macbutton" type="button" value="I like Macs">
+    <input id="macbutton" type="button" value="I like Mac">
     <input id="linuxbutton" type="button" value="I like Linux">
   </div>
-  <div class="col-md-4">
+  <div class="col-xs-4">
+    <div class="outer" style="height:100px">
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-3" style="height:100px">
+        <div class="inner" id="beforegraph" style="background-color:red;">
+        </div>
+      </div>
+      <div class="col-xs-2">
+      </div>
+      <div class="col-xs-3" style="height:100px">
+        <div class="inner" id="aftergraph" style="background-color:yellow;">
+        </div>
+      </div>
+      <div class="col-xs-2">
+      </div>
+    </div>
     <h3 id="beforeusers"></h3>
     <h3 id="afterusers"></h3>
-    <div class="col-md-6">
-    <pre><span class="k">while</span> (x == y) {
+    <br>
+    <div class="col-xs-6">
+      <pre><span class="k">while</span> (x == y) {
     something();
     somethingelse();
 }
- </pre></div>
-<div class="col-md-6">
+ </pre>
+    </div>
+    <div class="col-xs-6">
       <pre><span class="k">while</span> (x == y)
 {
     something();
     somethingelse();
-}</pre></div>
+}</pre>
+    </div>
     <input id="beforebutton" type="button" value="I like the first">
     <input id="afterbutton" type="button" value="I like the second">
   </div>
@@ -73,16 +153,6 @@
       </p>
     </div>
   </footer>
-  <!--<form> Enter A Utah City:
-    <input type="text" id="cityfield" value="">
-    <br> Suggestion:
-    <span id="txtHint">Empty</span>
-    <input id="button" type="submit" value="Submit"> </form>
-  <p>City</p>
-  <textarea id="dispcity">No City</textarea>
-  <p>Current Weather</p>
-  <div id="weather">No weather</div>
-</form>-->
 </body>
 <script>
   $("#vimbutton").click(function(e) {
@@ -144,74 +214,25 @@
   function update() {
     $.getJSON("query", function(data) {
       $("#emacsusers").html("Votes for Emacs: " + data.emacs);
-      $("#vimusers").html("Votes for Vim: " + data.vim);
-      $("#windowsusers").html("Votes for Windows: " + data.windows);
-      $("#macusers").html("Votes for Mac: " + data.mac);
+      $("#vimusers").html("Votes for Vim: " + data.vim + "&nbsp;&nbsp;&nbsp;&nbsp;");
+      var g1 = Number(data.emacs) + Number(data.vim);
+      $("#vimgraph").height(data.vim / g1 * 100);
+      $("#emacsgraph").height(data.emacs / g1 * 100);
+      $("#windowsusers").html("Votes for Windows: " + data.windows + "&nbsp;&nbsp;&nbsp;&nbsp;");
+      $("#macusers").html("Votes for Mac: " + data.mac + "&nbsp;&nbsp;&nbsp;&nbsp;");
       $("#linuxusers").html("Votes for Linux: " + data.linux);
-      $("#beforeusers").html("Votes for the first: " + data.before);
+      var g2 = Number(data.windows) + Number(data.mac) + Number(data.linux);
+      $("#windowsgraph").height(data.windows / g2 * 100);
+      $("#macgraph").height(data.mac / g2 * 100);
+      $("#linuxgraph").height(data.linux / g2 * 100);
+      $("#beforeusers").html("Votes for the first: " + data.before + "&nbsp;&nbsp;&nbsp;&nbsp;");
       $("#afterusers").html("Votes for the second: " + data.after);
+      var g3 = Number(data.before) + Number(data.after);
+      $("#beforegraph").height(data.before / g3 * 100);
+      $("#aftergraph").height(data.after / g3 * 100);
       $("#reportPageLoads").html("Total Page Loads: " + data.pageloads)
     });
   }
-  /*
-    $("#cityfield").keyup(function() {
-      $.getJSON("getcity?q=" + $("#cityfield").val(), function(data) {
-          var everything = "<ul>";
-          $.each(data, function(i, item) {
-            everything += "<li> " + data[i].city + "</li>";
-          });
-          everything += "</ul>";
-          $("#txtHint").html(everything);
-        })
-        .done(function() {
-          console.log('getJSON request succeeded!');
-        })
-        .fail(function(jqXHR, textStatus, errorThrown) {
-          console.log('getJSON request failed! ' + textStatus);
-          conlose.log("incoming " + jqXHR.responseText);
-        })
-        .always(function() {
-          console.log('getJSON request ended!');
-        })
-        .complete(function() {
-          console.log("complete");
-        });
-    });
-    $("#button").click(function(e) {
-      var value = $("#cityfield").val();
-      console.log(value);
-      e.preventDefault();
-      $("#dispcity").text(value);
-      var myurl = "https://api.wunderground.com/api/79b56d882614a97f/geolookup/conditions/q/UT/";
-      myurl += value;
-      myurl += ".json";
-      console.log(myurl);
-      $.ajax({
-        url: myurl,
-        dataType: "jsonp",
-        success: function(parsed_json) {
-          var location = parsed_json['location']['city'];
-          var temp_string = parsed_json['current_observation']['temperature_string'];
-          var current_weather = parsed_json['current_observation']['weather'];
-          var pic = parsed_json['current_observation']['image']['url'];
-          var observation_location = parsed_json['current_observation']['observation_location']['full'];
-          var humidity = parsed_json['current_observation']['relative_humidity'];
-          var wind_mph = parsed_json['current_observation']['wind_mph'];
-          var wind_dir = parsed_json['current_observation']['wind_dir'];
-          everything = "<ul>";
-          everything += "<li>Location: " + location;
-          everything += "<li>Observation Location: " + observation_location;
-          everything += "<li>Temperature: " + temp_string;
-          everything += "<li>Humidity: " + humidity;
-          everything += "<li>Wind Speed: " + wind_mph + " MPH";
-          everything += "<li>Wind Direction: " + wind_dir;
-          everything += "<li>Weather: " + current_weather;
-          everything += "</ul>";
-          everything += "<img src=\"" + pic + "\">";
-          $("#weather").html(everything);
-        }
-      });
-    });*/
 </script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
