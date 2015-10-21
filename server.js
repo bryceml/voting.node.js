@@ -1,7 +1,7 @@
 var fs = require('fs');
 var http = require('http');
 var url = require('url');
-var ROOT_DIR = ".";
+var ROOT_DIR = "./";
 var vimcount = 0;
 var emacscount = 0;
 var windows = 0;
@@ -81,4 +81,5 @@ http.createServer(function(req, res) {
       res.end(data);
     });
   }
-}).listen(8080);
+}).listen(3002);
+console.log("Listening on port 3002");
