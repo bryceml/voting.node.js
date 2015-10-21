@@ -81,5 +81,5 @@ http.createServer(function(req, res) {
       res.end(data);
     });
   }
-}).listen(3002);
-console.log("Listening on port 3002");
+}).listen(8080);
+console.log("Listening on port 8080");
