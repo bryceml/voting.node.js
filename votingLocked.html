@@ -1,53 +1,9 @@
 <html>
 
 <head>
-  <style>
-    * {
-      text-align: center;
-      font-size: 16px;
-      color: #222;
-      font-family: arial, sans-serif;
-    }
-
-    .footer {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      /* Set the fixed height of the footer here */
-      height: 60px;
-      background-color: #f5f5f5;
-    }
-
-    pre {
-      text-align: left;
-    }
-
-    .k {
-      color: #008800;
-      font-weight: bold;
-    }
-
-    h3 {
-      display: inline-block;
-      font-size: 15px !important;
-    }
-
-    .outer {
-      position: relative;
-      border-width: 1px;
-      border-style: solid;
-      border-color: black;
-    }
-
-    .inner {
-      position: absolute;
-      bottom: 1;
-      left: 0;
-      right: 0;
-    }
-  </style>
   <title>Vote</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/styles.css">
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 </head>
@@ -80,12 +36,12 @@
     <div class="col-xs-12">
       <div class="col-xs-6">
         <h3 id="vimusers"></h3><br/><br/>
-        <img src="vim.png" width="70px"><br/><br/>
+        <img src="img/vim.png" width="70px"><br/><br/>
 	<input id="vimbutton" type="button" value="I like Vim">    
       </div>
       <div class="col-xs-6">
 	<h3 id="emacsusers"></h3><br/><br/>
-        <img src="emacs.png" width="70px"><br/><br/>
+        <img src="img/emacs.png" width="70px"><br/><br/>
 	<input id="emacsbutton" type="button" value="I like Emacs">
       </div>
     </div>
@@ -122,17 +78,17 @@
     <div class="col-xs-12">
       <div class="col-xs-4">
         <h3 id="windowsusers"></h3><br/><br/>
-        <img src="windows.png" width="70px"><br/><br/>
+        <img src="img/windows.png" width="70px"><br/><br/>
 	<input id="windowsbutton" type="button" value="I like Windows">
       </div>
       <div class="col-xs-4">
         <h3 id="macusers"></h3><br/><br/>
-        <img src="apple.png" width="70px"><br/><br/>
+        <img src="img/apple.png" width="70px"><br/><br/>
       	<input id="macbutton" type="button" value="I like Mac">
       </div>
       <div class="col-xs-4">
         <h3 id="linuxusers"></h3><br/><br/>
-	<img src="linux.jpeg" width="70px"><br/><br/>
+	<img src="img/linux.jpeg" width="70px"><br/><br/>
       	<input id="linuxbutton" type="button" value="I like Linux">
       </div>
       <div class="col-xs-2">
@@ -186,89 +142,6 @@
     </div>
   </footer>
 </body>
-<script>
-  $("#vimbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("vim", function(data) {});
-    update();
-    $("#vimbutton").attr('disabled', 'disabled');
-    $("#emacsbutton").attr('disabled', 'disabled');
-  });
-  $("#emacsbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("emacs", function(data) {});
-    update();
-    $("#vimbutton").attr('disabled', 'disabled');
-    $("#emacsbutton").attr('disabled', 'disabled');
-  });
-  $("#windowsbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("windows", function(data) {});
-    update();
-    $("#windowsbutton").attr('disabled', 'disabled');
-    $("#macbutton").attr('disabled', 'disabled');
-    $("#linuxbutton").attr('disabled', 'disabled');
-  });
-  $("#macbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("mac", function(data) {});
-    update();
-    $("#windowsbutton").attr('disabled', 'disabled');
-    $("#macbutton").attr('disabled', 'disabled');
-    $("#linuxbutton").attr('disabled', 'disabled');
-  });
-  $("#linuxbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("linux", function(data) {});
-    update();
-    $("#windowsbutton").attr('disabled', 'disabled');
-    $("#macbutton").attr('disabled', 'disabled');
-    $("#linuxbutton").attr('disabled', 'disabled');
-  });
-  $("#beforebutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("before", function(data) {});
-    update();
-    $("#beforebutton").attr('disabled', 'disabled');
-    $("#afterbutton").attr('disabled', 'disabled');
-  });
-  $("#afterbutton").click(function(e) {
-    e.preventDefault();
-    $.getJSON("after", function(data) {});
-    update();
-    $("#beforebutton").attr('disabled', 'disabled');
-    $("#afterbutton").attr('disabled', 'disabled');
-  });
-  $(document).ready(function(){
-    update();
-    setInterval(function() {
-    update();
-  }, 4000);
-});
-
-  function update() {
-    $.getJSON("query", function(data) {
-      $("#emacsusers").html("Votes for Emacs: " + data.emacs);
-      $("#vimusers").html("Votes for Vim: " + data.vim + "&nbsp;&nbsp;&nbsp;&nbsp;");
-      var g1 = Number(data.emacs) + Number(data.vim);
-      $("#vimgraph").height(data.vim / g1 * 100);
-      $("#emacsgraph").height(data.emacs / g1 * 100);
-      $("#windowsusers").html("Votes for Windows: " + data.windows + "&nbsp;&nbsp;&nbsp;&nbsp;");
-      $("#macusers").html("Votes for Mac: " + data.mac + "&nbsp;&nbsp;&nbsp;&nbsp;");
-      $("#linuxusers").html("Votes for Linux: " + data.linux);
-      var g2 = Number(data.windows) + Number(data.mac) + Number(data.linux);
-      $("#windowsgraph").height(data.windows / g2 * 100);
-      $("#macgraph").height(data.mac / g2 * 100);
-      $("#linuxgraph").height(data.linux / g2 * 100);
-      $("#beforeusers").html("Votes for the first: " + data.before + "&nbsp;&nbsp;&nbsp;&nbsp;");
-      $("#afterusers").html("Votes for the second: " + data.after);
-      var g3 = Number(data.before) + Number(data.after);
-      $("#beforegraph").height(data.before / g3 * 100);
-      $("#aftergraph").height(data.after / g3 * 100);
-      $("#reportPageLoads").html("Total Page Loads: " + data.pageloads)
-    });
-  }
-</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
+<script src="js/votingLocked.js"></script>
 </html>
