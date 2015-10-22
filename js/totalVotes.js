@@ -66,23 +66,7 @@
       var g1 = Number(data.emacs) + Number(data.vim);
       $("#vimgraph").height(data.vim / g1 * 100);
       $("#emacsgraph").height(data.emacs / g1 * 100);
-      if (data.emacs > data.vim){
-          console.log("the winner is emacs");
-        $("#emacsusers").html("The winner is Emacs!");
-        $("#vimusers").html("");
-      }
-      if (data.emacs < data.vim){
-          console.log("vim winner");
-        $("#emacsusers").html("The winner is Vim!");
-        $("#vimusers").html("");
 
-      }
-      if (data.emacs == data.vim){
-          console.log("It's a tie!");
-        $("#emacsusers").html("It's a tie!");
-        $("#vimusers").html("");
-
-      }
       $("#windowsusers").html("Votes for Windows: " + data.windows + "&nbsp;&nbsp;&nbsp;&nbsp;");
       $("#macusers").html("Votes for Mac: " + data.mac + "&nbsp;&nbsp;&nbsp;&nbsp;");
       $("#linuxusers").html("Votes for Linux: " + data.linux);
@@ -92,6 +76,23 @@
       $("#linuxgraph").height(data.linux / g2 * 100);
       $("#beforeusers").html("Votes for the first: " + data.before + "&nbsp;&nbsp;&nbsp;&nbsp;");
       $("#afterusers").html("Votes for the second: " + data.after);
+      if (data.vim < data.emacs){
+          console.log("vim winner");
+        $("#emacsusers").html("The winner is the emacs!");
+        $("#vimusers").html("");
+
+      }
+      else if (data.vim == data.emacs){
+          console.log("It's a tie!");
+        $("#emacsusers").html("It's a tie!");
+        $("#vimusers").html("It's a tie");
+
+      }
+      else {
+//        console.log("vim winner");
+        $("#vimusers").html("The winner is the vim!");
+        $("#emacsusers").html("");
+      }
       if (data.windows > data.mac){
           if(data.windows > data.linux){
             console.log("the winner is windows");
@@ -100,16 +101,23 @@
             $("#linuxusers").html("");
 
           }
-          else{
+          else if (data.windows == data.linux){
+//                    console.log("the winner is linux");
+                $("#windowsusers").html("It's a tie between windows and linux!");
+                $("#macusers").html("");
+                $("#linuxusers").html("It's a tie between windows and linux!");
+
+          }
+          else {
             console.log("the winner is linux");
             $("#windowsusers").html("The winner is Linux!");
             $("#macusers").html("");
             $("#linuxusers").html("");
-
           }
 
+
       }
-      else {
+      else if (data.windows < data.mac){
           if(data.mac > data.linux){
             console.log("the winner is mac");
             $("#windowsusers").html("The winner is mac!");
@@ -117,30 +125,51 @@
             $("#linuxusers").html("");  
           }
           else{
-            console.log("the winner is linux");
-            $("#windowsusers").html("The winner is Linux!");
-            $("#macusers").html("");
-            $("#linuxusers").html("");
+                if (data.mac == data.linux){
+//                    console.log("the winner is linux");
+                $("#windowsusers").html("");
+                $("#macusers").html("It's a tie between mac and linux!");
+                $("#linuxusers").html("");
+              }
+
           }
 //          console.log("vim winner");
 //        $("#emacsusers").html("The winner is Vim!");
 //        $("#vimusers").html("");
 
       }
+      else {
+        if (data.windows == data.linux){
+            $("#windowsusers").html("");
+            $("#macusers").html("It's a tie!");
+            $("#linuxusers").html(""); 
+        }
+        else if (data.windows < data.linux){
+            $("#windowsusers").html("");
+            $("#macusers").html("");
+            $("#linuxusers").html("The winner is Linux!"); 
+        }
+        else {
+            $("#windowsusers").html("It's a tie between mac and windows!");
+            $("#macusers").html("It's a tie between mac and windows!");
+            $("#linuxusers").html(""); 
+        }
+      }
+        
       if (data.before < data.after){
           console.log("vim winner");
-        $("#beforeusers").html("The winner is the Second!");
-        $("#afterusers").html("");
+        $("#afterusers").html("The winner is the Second!");
+        $("#beforeusers").html("");
 
       }
       else if (data.before == data.after){
           console.log("It's a tie!");
-        $("#emacsusers").html("It's a tie!");
-        $("#vimusers").html("");
+        $("#afterusers").html("It's a tie!");
+        $("#beforeusers").html("It's a tie");
 
       }
       else {
-        console.log("vim winner");
+//        console.log("vim winner");
         $("#beforeusers").html("The winner is the First!");
         $("#afterusers").html("");
       }
