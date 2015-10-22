@@ -110,9 +110,9 @@
           }
           else {
             console.log("the winner is linux");
-            $("#windowsusers").html("The winner is Linux!");
+            $("#windowsusers").html("");
             $("#macusers").html("");
-            $("#linuxusers").html("");
+            $("#linuxusers").html("The winner is Linux!");
           }
 
 
@@ -120,8 +120,8 @@
       else if (data.windows < data.mac){
           if(data.mac > data.linux){
             console.log("the winner is mac");
-            $("#windowsusers").html("The winner is mac!");
-            $("#macusers").html("");
+            $("#windowsusers").html("");
+            $("#macusers").html("The winner is mac!");
             $("#linuxusers").html("");  
           }
           else{
@@ -131,6 +131,12 @@
                 $("#macusers").html("It's a tie between mac and linux!");
                 $("#linuxusers").html("");
               }
+            else {
+            console.log("the winner is linux");
+            $("#windowsusers").html("");
+            $("#macusers").html("");
+            $("#linuxusers").html("The winner is Linux!");
+          }
 
           }
 //          console.log("vim winner");
